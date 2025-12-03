@@ -1,0 +1,24 @@
+# Created at 2025-12-02T15:22:07.576
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '#'.
+
+# Created at 2025-12-02T15:22:07.578
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# There is insufficient memory for the Java Runtime Environment to continue.'.
+
+# Created at 2025-12-02T15:22:07.581
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# Native memory allocation (malloc) failed to allocate 106416 bytes for Chunk::new'.
+
+# Created at 2025-12-02T15:22:07.585
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# An error report file with more information is saved as:'.
+
+# Created at 2025-12-02T15:22:07.705
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# C:\Users\harshith.qa\Downloads\appium-testng-fms-project\hs_err_pid11400.log'.
+
+# Created at 2025-12-02T15:22:07.707
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '#'.
+
+# Created at 2025-12-02T15:22:07.708
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# Compiler replay data is saved as:'.
+
+# Created at 2025-12-02T15:22:07.733
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# C:\Users\harshith.qa\Downloads\appium-testng-fms-project\replay_pid11400.log'.
+

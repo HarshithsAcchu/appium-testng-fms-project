@@ -1,0 +1,13 @@
+<suite name="Onboarding subset">
+  <test name="Start at field entry">
+    <parameter name="resumeFrom" value="AFTER_MOBILE_SUBMIT"/>
+    <classes>
+      <class name="com.example.tests.PermissionAndJLGTest"/>
+    </classes>
+  </test>
+  <test name="L2 Prospect L1 Flow">
+    <classes>
+      <class name="com.example.tests.L2ProspectL1FlowTest"/>
+    </classes>
+  </test>
+</suite>
