@@ -91,7 +91,7 @@ public class L2InfoActions extends BasePage {
             tinySleep();
             return true;
         } catch (Exception e) {
-            System.err.println("[L2InfoActions] Failed to click continuation directly: " + e.getMessage());
+            System.err.println("[L2InfoActions] Failed to click continuation directly : " + e.getMessage());
             return false;
         }
     }
