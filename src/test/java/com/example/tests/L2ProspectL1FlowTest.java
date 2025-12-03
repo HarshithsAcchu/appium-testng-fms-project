@@ -67,7 +67,7 @@ public class L2ProspectL1FlowTest   extends BaseTest {
         L2InfoActions l2Actions = new L2InfoActions(driver);
         boolean bankFlowOk = l2Actions.fillBankDetailsAndCaptureProof();
         if (!bankFlowOk) {
-            throw new IllegalStateException("Bank details workflow did not complete successfully.");
+            throw new IllegalStateException("Bank details workflow did not complete successfully    and new .");
         }
     }
 }
