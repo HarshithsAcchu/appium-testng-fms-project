@@ -60,7 +60,15 @@ public final class L2_Info_Locators {
     public static final By BANK_BRANCH_ADDRESS_INPUT = By.id("mifix.io.qa:id/ed_branch_address");
     public static final By BANK_PROOF_IMAGE_TOGGLE = By.id("mifix.io.qa:id/add_or_view_bank_proof_image");
     public static final By BANK_PROOF_COMPOSE_CAPTURE = By.xpath("//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.view.View");
+    public static final By BANK_PROOF_SECOND_CAPTURE_COMPOSE = By.xpath("//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.view.View[1]");
     public static final By CAMERA_CAPTURE_BUTTON = By.xpath("//android.widget.ImageButton[@content-desc='Capture']");
+    public static final By MLKIT_CONFIRM_CROP_BUTTON = By.xpath("//android.widget.Button[@resource-id='com.google.android.gms.optional_mlkit_docscan_ui:id/confirm_crop_button']");
+    public static final By MLKIT_NEXT_BUTTON = By.xpath("//android.widget.Button[@content-desc='Next']");
+    public static final By BANK_PROOF_UPLOAD_BUTTON = By.xpath("//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.Button");
+    public static final By BANK_PROOF_PREVIEW_DISMISS_BUTTON = By.xpath("//androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.Button");
+    public static final By BANK_PROOF_PREVIEW_CLOSE_ICON = By.id("mifix.io.qa:id/iv_close");
+    public static final By BANK_PROOF_SAVE_BUTTON = By.id("mifix.io.qa:id/bt_save");
+    public static final By BANK_ACCOUNT_DETAILS_CARD = By.xpath("//androidx.cardview.widget.CardView[@resource-id='mifix.io.qa:id/cvBankAccountDetails']/android.view.ViewGroup");
 
 
     

@@ -32,21 +32,14 @@
           "stepName": "enterCredentials",
           "enabled": true,
           "page": "HomePage",
-          "actions": [
-            "enterUserId",
-            "enterPassword",
-            "clickSignInButton"
-          ],
+          "actions": ["enterUserId", "enterPassword", "clickSignInButton"],
           "useCredentials": true
         },
         {
           "stepName": "navigateToJLG",
           "enabled": true,
           "page": "HomePage",
-          "actions": [
-            "waitForJLGVisible",
-            "clickJLG"
-          ]
+          "actions": ["waitForJLGVisible", "clickJLG"]
         },
         {
           "stepName": "openOnboarding",

@@ -494,26 +494,144 @@ public class L2InfoActions extends BasePage {
 
     private boolean captureBankProofImage() {
         if (!clickWhenClickable(L2_Info_Locators.BANK_PROOF_IMAGE_TOGGLE, Duration.ofSeconds(8))) {
-            System.err.println("[L2InfoActions] Unable to open bank proof capture toggle.");
-            return false;
+            System.err.println("[L2InfoActions] Unable to open bank proof capture toggle; trying preview dismiss.");
+            if (!clickWhenClickable(L2_Info_Locators.BANK_PROOF_PREVIEW_DISMISS_BUTTON, Duration.ofSeconds(6))) {
+                System.err.println("[L2InfoActions] Preview dismiss button also unavailable; aborting bank proof flow.");
+                return false;
+            }
         }
 
         tinySleep();
 
+        if (bankProofImagesAlreadyPresent()) {
+            System.out.println("[L2InfoActions] Existing bank proof images detected; dismissing preview and proceeding to save.");
+            if (!clickWhenClickable(L2_Info_Locators.BANK_PROOF_PREVIEW_DISMISS_BUTTON, Duration.ofSeconds(6))) {
+                System.out.println("[L2InfoActions] Preview dismiss button not clickable; continuing.");
+            }
+            tinySleep();
+            swipeToCoordinates(500, 1400, Duration.ofMillis(350));
+            tinySleep();
+            return finalizeBankProofSection();
+        }
+
         if (!clickFirstVisible(L2_Info_Locators.BANK_PROOF_COMPOSE_CAPTURE, Duration.ofSeconds(8))) {
             System.err.println("[L2InfoActions] Unable to trigger bank proof compose capture option.");
+            if (clickWhenClickable(L2_Info_Locators.BANK_PROOF_PREVIEW_CLOSE_ICON, Duration.ofSeconds(6))) {
+                System.out.println("[L2InfoActions] Compose capture missing; tapped close icon and proceeding to save.");
+                tinySleep();
+                swipeToCoordinates(500, 1400, Duration.ofMillis(350));
+                tinySleep();
+                return finalizeBankProofSection();
+            }
             return false;
         }
 
         tinySleep();
 
         if (!clickWhenClickable(L2_Info_Locators.CAMERA_CAPTURE_BUTTON, Duration.ofSeconds(10))) {
-            System.err.println("[L2InfoActions] Unable to click camera capture button for bank proof.");
+            System.err.println("[L2InfoActions] Unable to click camera capture button for bank proof (first shot).");
+            return false;
+        }
+
+        if (!clickWhenClickable(L2_Info_Locators.MLKIT_CONFIRM_CROP_BUTTON, Duration.ofSeconds(10))) {
+            System.err.println("[L2InfoActions] Confirm crop button did not appear after first capture.");
+            return false;
+        }
+
+        if (!clickWhenClickable(L2_Info_Locators.MLKIT_NEXT_BUTTON, Duration.ofSeconds(15))) {
+            System.err.println("[L2InfoActions] Next button did not become enabled after first crop confirm.");
             return false;
         }
 
         tinySleep();
+
+        if (!clickWhenClickable(L2_Info_Locators.BANK_PROOF_SECOND_CAPTURE_COMPOSE, Duration.ofSeconds(10))) {
+            System.err.println("[L2InfoActions] Unable to re-open compose camera icon for second capture.");
+            return false;
+        }
+
+        tinySleep();
+
+        if (!clickWhenClickable(L2_Info_Locators.CAMERA_CAPTURE_BUTTON, Duration.ofSeconds(10))) {
+            System.err.println("[L2InfoActions] Unable to click camera capture button for bank proof (second shot).");
+            return false;
+        }
+
+        if (!clickWhenClickable(L2_Info_Locators.MLKIT_CONFIRM_CROP_BUTTON, Duration.ofSeconds(10))) {
+            System.err.println("[L2InfoActions] Confirm crop button did not appear after second capture.");
+            return false;
+        }
+
+        if (!clickWhenClickable(L2_Info_Locators.MLKIT_NEXT_BUTTON, Duration.ofSeconds(15))) {
+            System.err.println("[L2InfoActions] Next button did not become enabled after second crop confirm.");
+            return false;
+        }
+
+        tinySleep();
+
+        if (!clickWhenClickable(L2_Info_Locators.BANK_PROOF_UPLOAD_BUTTON, Duration.ofSeconds(12))) {
+            System.err.println("[L2InfoActions] Unable to click Upload button after captures.");
+            return false;
+        }
+
+        tinySleep();
+
+        boolean successDisplayed = isElementDisplayed(L2_Info_Locators.SUCCESS_MESSAGE, Duration.ofSeconds(6));
+        if (successDisplayed) {
+            System.out.println("[L2InfoActions] Bank proof upload success message detected.");
+        } else {
+            System.out.println("[L2InfoActions] Success message not observed after upload; continuing cautiously.");
+        }
+
+        if (!clickWhenClickable(L2_Info_Locators.ALERT_OK_TEXT, Duration.ofSeconds(8))) {
+            System.out.println("[L2InfoActions] OK alert not clickable or not present after bank proof upload.");
+        }
+
+        swipeToCoordinates(500, 1400, Duration.ofMillis(350));
+        if (!clickWhenClickable(L2_Info_Locators.BANK_PROOF_PREVIEW_DISMISS_BUTTON, Duration.ofSeconds(4))) {
+            System.out.println("[L2InfoActions] Preview dismiss button not present post-upload or already handled.");
+        }
+        tinySleep();
+
+        return finalizeBankProofSection();
+    }
+
+    private boolean finalizeBankProofSection() {
+        if (!isElementDisplayed(L2_Info_Locators.BANK_PROOF_SAVE_BUTTON, Duration.ofSeconds(6))) {
+            System.err.println("[L2InfoActions] Save button not visible after bank proof upload workflow.");
+            return false;
+        }
+
+        if (!clickWhenClickable(L2_Info_Locators.BANK_PROOF_SAVE_BUTTON, Duration.ofSeconds(8))) {
+            System.err.println("[L2InfoActions] Save button could not be clicked after bank proof upload.");
+            return false;
+        }
+
+        tinySleep();
+
+        try {
+            WebElement detailsCard = driver.findElement(L2_Info_Locators.BANK_ACCOUNT_DETAILS_CARD);
+            if (detailsCard == null || !detailsCard.isEnabled()) {
+                System.err.println("[L2InfoActions] Bank account details card is not enabled after proof capture.");
+                return false;
+            }
+        } catch (Exception e) {
+            System.err.println("[L2InfoActions] Unable to verify bank account details card state: " + e.getMessage());
+            return false;
+        }
+
         return true;
+    }
+
+    private boolean bankProofImagesAlreadyPresent() {
+        try {
+            boolean firstImageVisible = isElementDisplayed(By.xpath("//android.widget.ImageView[contains(@resource-id,'bank_proof_image_1') or contains(@content-desc,'Bank Proof 1')]"), Duration.ofMillis(600));
+            boolean secondImageVisible = isElementDisplayed(By.xpath("//android.widget.ImageView[contains(@resource-id,'bank_proof_image_2') or contains(@content-desc,'Bank Proof 2')]"), Duration.ofMillis(600));
+            boolean uploadDisabled = !isElementDisplayed(L2_Info_Locators.BANK_PROOF_UPLOAD_BUTTON, Duration.ofMillis(600));
+            return (firstImageVisible || secondImageVisible) && uploadDisabled;
+        } catch (Exception ignored) {
+            return false;
+        }
     }
 
     private boolean clickFirstVisible(By locator, Duration timeout) {
