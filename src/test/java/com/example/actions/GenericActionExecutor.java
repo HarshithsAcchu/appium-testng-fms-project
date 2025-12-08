@@ -19,6 +19,9 @@ import com.example.config.models.ActionStep;
 import io.appium.java_client.android.AndroidDriver;
 
 import java.util.Collections;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Generic executor for common mobile automation actions
@@ -29,11 +32,20 @@ public class GenericActionExecutor {
     private final AndroidDriver driver;
     private final ConfigurationReader configReader;
     private final WebDriverWait defaultWait;
+    private Map<String, String> testData;
+    private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("\\$\\{testData\\.([^}]+)\\}");
 
     public GenericActionExecutor(AndroidDriver driver) {
         this.driver = driver;
         this.configReader = ConfigurationReader.getInstance();
         this.defaultWait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    }
+
+    /**
+     * Set test data for placeholder resolution
+     */
+    public void setTestData(Map<String, String> testData) {
+        this.testData = testData;
     }
 
     /**
@@ -138,6 +150,9 @@ public class GenericActionExecutor {
             return;
         }
         
+        // Resolve placeholder if present
+        text = resolvePlaceholder(text);
+        
         element.clear();
         element.sendKeys(text);
         System.out.println("[GenericActionExecutor] Entered text: " + text);
@@ -182,16 +197,22 @@ public class GenericActionExecutor {
     private void performScrollToElement(ActionStep step) {
         int maxScrolls = step.getParamAsInt("maxScrolls", 10);
         String direction = step.getParamAsString("direction", "down");
+        By locator = getLocator(step);
         
         for (int i = 0; i < maxScrolls; i++) {
             try {
-                WebElement element = findElement(step, Duration.ofSeconds(2));
-                if (element.isDisplayed()) {
-                    System.out.println("[GenericActionExecutor] Element found after " + i + " scrolls");
+                // Check if element is visible in viewport (not just present in DOM)
+                WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(2));
+                WebElement element = shortWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+                
+                // Double-check it's actually displayed
+                if (element != null && element.isDisplayed()) {
+                    System.out.println("[GenericActionExecutor] Element '" + step.getLocatorName() + "' is visible after " + i + " scrolls");
                     return;
                 }
-            } catch (Exception e) {
-                // Element not found, continue scrolling
+            } catch (TimeoutException | NoSuchElementException e) {
+                // Element not visible yet, continue scrolling
+                System.out.println("[GenericActionExecutor] Element '" + step.getLocatorName() + "' not visible yet, scroll attempt " + (i + 1) + "/" + maxScrolls);
             }
             
             // Create temp action for scroll
@@ -201,7 +222,7 @@ public class GenericActionExecutor {
             performScroll(scrollAction);
         }
         
-        throw new RuntimeException("Element not found after " + maxScrolls + " scrolls");
+        throw new RuntimeException("Element '" + step.getLocatorName() + "' not found after " + maxScrolls + " scrolls");
     }
 
     /**
@@ -316,7 +337,7 @@ public class GenericActionExecutor {
 
     private WebElement findElement(ActionStep step, Duration timeout) {
         By locator = getLocator(step);
-        
+        System.out.println("[GenericActionExecutor] Finding element with locator " + locator);
         WebDriverWait wait = new WebDriverWait(driver, timeout);
         wait.pollingEvery(Duration.ofMillis(500));
         wait.ignoring(NoSuchElementException.class);
@@ -333,7 +354,35 @@ public class GenericActionExecutor {
         if (category == null || name == null) {
             throw new IllegalArgumentException("Locator category and name must be specified");
         }
-        
+        System.out.println("[GenericActionExecutor] Getting locator for " + category + ":" + name);
         return configReader.getLocator(category, name);
+    }
+
+    /**
+     * Resolve ${testData.key} placeholders in values
+     */
+    private String resolvePlaceholder(String value) {
+        if (value == null || !value.contains("${")) {
+            return value;
+        }
+        
+        Matcher matcher = PLACEHOLDER_PATTERN.matcher(value);
+        StringBuffer result = new StringBuffer();
+        
+        while (matcher.find()) {
+            String key = matcher.group(1);
+            String replacement = testData != null ? testData.get(key) : null;
+            
+            if (replacement != null) {
+                matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
+                System.out.println("[GenericActionExecutor] Resolved ${testData." + key + "} -> " + replacement);
+            } else {
+                System.err.println("[GenericActionExecutor] WARNING: No testData found for key: " + key);
+                matcher.appendReplacement(result, Matcher.quoteReplacement(value));
+            }
+        }
+        
+        matcher.appendTail(result);
+        return result.toString();
     }
 }

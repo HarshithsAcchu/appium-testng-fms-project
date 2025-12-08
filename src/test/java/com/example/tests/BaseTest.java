@@ -6,6 +6,9 @@ import java.time.Duration;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
+import com.example.config.ConfigurationReader;
+import com.example.config.models.GlobalSettings;
+
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.remote.AutomationName;
@@ -19,18 +22,31 @@ public class BaseTest {
     @BeforeClass
     public void setUp() {
         try {
-            // Initialize UiAutomator2Options with required capabilities
+            // Load global settings from JSON config
+            ConfigurationReader configReader = ConfigurationReader.getInstance();
+            GlobalSettings globalSettings = configReader.getTestConfig().getGlobalSettings();
+            
+            if (globalSettings == null) {
+                throw new IllegalStateException("Global settings not found in test-config.json");
+            }
+            
+            System.out.println("[BaseTest] Loading capabilities from globalSettings...");
+            
+            // Initialize UiAutomator2Options with capabilities from JSON
             UiAutomator2Options options = new UiAutomator2Options()
-                .setPlatformName("Android")
+                .setPlatformName(globalSettings.getPlatformName())
                 .setAutomationName(AutomationName.ANDROID_UIAUTOMATOR2)
-                .setDeviceName("emulator-5554") // Default, can be overridden by environment variable
-                .setAppPackage("com.nst.profile.qa")
-                .setAppActivity("com.nst.profile.feature_splash.ui.SplashScreenActivity")
+                .setDeviceName(globalSettings.getDeviceName())
+                .setAppPackage(globalSettings.getAppPackage())
+                .setAppActivity(globalSettings.getAppActivity())
                 .setNewCommandTimeout(Duration.ofSeconds(60000))
-                .setAutoGrantPermissions(true)
-                .setNoReset(false)  // This is the correct method in newer versions
-                .setFullReset(false);
-                // Add any additional capabilities here if needed
+                .setAutoGrantPermissions(globalSettings.isAutoGrantPermissions())
+                .setNoReset(globalSettings.isNoReset())
+                .setFullReset(globalSettings.isFullReset());
+            
+            System.out.println("[BaseTest] AppPackage: " + globalSettings.getAppPackage());
+            System.out.println("[BaseTest] AppActivity: " + globalSettings.getAppActivity());
+            System.out.println("[BaseTest] DeviceName: " + globalSettings.getDeviceName());
 
             // Override with environment variables if set
             String deviceName = System.getenv("DEVICE_NAME");
@@ -43,9 +59,12 @@ public class BaseTest {
                 options.setUdid(udid);
             }
 
-            // Initialize driver with options
-            String serverUrl = System.getenv().getOrDefault("APPIUM_URL", "http://127.0.0.1:4723");
-            System.out.println("Connecting to Appium server at: " + serverUrl);
+            // Initialize driver with options (prefer JSON config, fallback to env var)
+            String serverUrl = globalSettings.getAppiumUrl();
+            if (serverUrl == null || serverUrl.isEmpty()) {
+                serverUrl = System.getenv().getOrDefault("APPIUM_URL", "http://127.0.0.1:4723");
+            }
+            System.out.println("[BaseTest] Connecting to Appium server at: " + serverUrl);
             
             driver = new AndroidDriver(new URL(serverUrl), options);
             System.out.println("Appium session started successfully");

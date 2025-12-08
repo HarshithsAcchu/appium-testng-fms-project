@@ -31,7 +31,7 @@ public class L2ProspectL1FlowTest extends BaseTest {
         testRunner.executeTestSuite();
         
         System.out.println("=".repeat(80));
-        System.out.println("[L2ProspectL1FlowTest] JSON-driven test completed successfully");
+        System.out.println("[L2ProspectL1FlowTest] JSON-    driven test completed successfully");
         System.out.println("=".repeat(80));
     }
 

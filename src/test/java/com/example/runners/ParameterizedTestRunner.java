@@ -47,6 +47,12 @@ public class ParameterizedTestRunner {
             return;
         }
 
+        // Set testData in action executor for placeholder resolution
+        if (suite.getTestData() != null) {
+            actionExecutor.setTestData(suite.getTestData());
+            System.out.println("[TestRunner] Loaded testData with " + suite.getTestData().size() + " entries");
+        }
+
         System.out.println("[TestRunner] Executing test suite: " + suiteName);
 
         for (ExecutionStep step : suite.getExecutionFlow()) {
