@@ -1,0 +1,387 @@
+{
+  "testSuites": [
+    {
+      "suiteName": "GenericLoginFlow",
+      "enabled": true,
+      "credentials": {
+        "username": "us-sh-shc-60507",
+        "password": "Nst@1234"
+      },
+      "executionFlow": [
+        {
+          "stepName": "loginWithGenericActions",
+          "enabled": true,
+          "description": "Login using pure JSON-driven generic actions",
+          "actionSteps": [
+            {
+              "actionType": "waitForVisible",
+              "locatorCategory": "login",
+              "locatorName": "userId",
+              "params": {
+                "timeout": 10
+              },
+              "description": "Wait for login screen"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "login",
+              "locatorName": "userId",
+              "description": "Click user ID field"
+            },
+            {
+              "actionType": "sendKeys",
+              "locatorCategory": "login",
+              "locatorName": "userId",
+              "value": "us-sh-shc-60507",
+              "description": "Enter username"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "login",
+              "locatorName": "password",
+              "description": "Click password field"
+            },
+            {
+              "actionType": "sendKeys",
+              "locatorCategory": "login",
+              "locatorName": "password",
+              "value": "Nst@1234",
+              "description": "Enter password"
+            },
+            {
+              "actionType": "hideKeyboard",
+              "optional": true,
+              "description": "Hide keyboard if visible"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "login",
+              "locatorName": "signInButton",
+              "description": "Click sign in button"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 2000
+              },
+              "description": "Wait for navigation"
+            }
+          ]
+        },
+        {
+          "stepName": "navigateToJLGWithGenericActions",
+          "enabled": true,
+          "description": "Navigate to JLG using generic actions",
+          "actionSteps": [
+            {
+              "actionType": "waitForVisible",
+              "locatorCategory": "home",
+              "locatorName": "jlgText",
+              "params": {
+                "timeout": 15
+              },
+              "description": "Wait for JLG to appear"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "home",
+              "locatorName": "jlgText",
+              "description": "Click JLG option"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "suiteName": "GenericOnboardingFlow",
+      "enabled": true,
+      "executionFlow": [
+        {
+          "stepName": "fillMobileNumberGeneric",
+          "enabled": true,
+          "description": "Fill mobile number using generic scroll and input",
+          "actionSteps": [
+            {
+              "actionType": "scrollToElement",
+              "locatorCategory": "onboarding",
+              "locatorName": "mobileInput",
+              "params": {
+                "maxScrolls": 5,
+                "direction": "down",
+                "distance": 400
+              },
+              "description": "Scroll to mobile input field"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "mobileInput",
+              "description": "Click mobile input"
+            },
+            {
+              "actionType": "sendKeys",
+              "locatorCategory": "onboarding",
+              "locatorName": "mobileInput",
+              "value": "9876543210",
+              "description": "Enter mobile number"
+            },
+            {
+              "actionType": "scroll",
+              "params": {
+                "direction": "down",
+                "distance": 300
+              },
+              "description": "Scroll down to submit button"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "validateParent",
+              "optional": true,
+              "description": "Click validate button if present"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "suiteName": "GenericL2ProspectFlow",
+      "enabled": true,
+      "testData": {
+        "alternateMobile": "8105928245",
+        "ifscCode": "ICIC0002121",
+        "bankAccount": "10990200087021"
+      },
+      "executionFlow": [
+        {
+          "stepName": "fillL2DetailsGeneric",
+          "enabled": true,
+          "description": "Fill L2 prospect details using only generic actions",
+          "actionSteps": [
+            {
+              "actionType": "waitForClickable",
+              "locatorCategory": "l2Info",
+              "locatorName": "prospectL1DetailsCard",
+              "params": {
+                "timeout": 10
+              },
+              "description": "Wait for L2 details card"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "prospectL1DetailsCard",
+              "description": "Open L2 prospect details"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1000
+              },
+              "description": "Wait for form to load"
+            },
+            {
+              "actionType": "scrollToElement",
+              "locatorCategory": "l2Info",
+              "locatorName": "alternateMobileInput",
+              "params": {
+                "maxScrolls": 3
+              },
+              "description": "Scroll to alternate mobile"
+            },
+            {
+              "actionType": "sendKeys",
+              "locatorCategory": "l2Info",
+              "locatorName": "alternateMobileInput",
+              "value": "8105928245",
+              "description": "Enter alternate mobile"
+            },
+            {
+              "actionType": "scroll",
+              "params": {
+                "direction": "down",
+                "distance": 400
+              },
+              "description": "Scroll to religion spinner"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "religionSpinner",
+              "description": "Click religion dropdown"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "religionOptionHindu",
+              "description": "Select Hindu option"
+            },
+            {
+              "actionType": "scroll",
+              "params": {
+                "direction": "down",
+                "distance": 300
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "educationSpinner",
+              "description": "Click education dropdown"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "educationOptionEngineeringGraduate",
+              "description": "Select Engineering Graduate"
+            },
+            {
+              "actionType": "scrollToElement",
+              "locatorCategory": "l2Info",
+              "locatorName": "submitTextButton",
+              "params": {
+                "maxScrolls": 5
+              },
+              "description": "Scroll to submit button"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "submitTextButton",
+              "description": "Click submit button"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "suiteName": "GenericSwipeExample",
+      "enabled": true,
+      "description": "Example showing swipe and advanced gestures",
+      "executionFlow": [
+        {
+          "stepName": "performSwipeGesture",
+          "enabled": true,
+          "actionSteps": [
+            {
+              "actionType": "swipe",
+              "params": {
+                "startX": 500,
+                "startY": 1500,
+                "endX": 500,
+                "endY": 500,
+                "duration": 800
+              },
+              "description": "Swipe up from bottom"
+            },
+            {
+              "actionType": "tap",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeThirdButton",
+              "description": "Tap on compose button"
+            },
+            {
+              "actionType": "longTap",
+              "locatorCategory": "onboarding",
+              "locatorName": "cameraCaptureButton",
+              "params": {
+                "duration": 1500
+              },
+              "optional": true,
+              "description": "Long press camera button"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "locators": {
+    "login": {
+      "userId": {
+        "type": "ID",
+        "value": "com.nst.profile.qa:id/editUserId"
+      },
+      "password": {
+        "type": "ID",
+        "value": "com.nst.profile.qa:id/editPassword"
+      },
+      "signInButton": {
+        "type": "ID",
+        "value": "com.nst.profile.qa:id/buttonSignIn"
+      }
+    },
+    "home": {
+      "jlgText": {
+        "type": "XPATH",
+        "value": "//*[contains(@text,'JLG')]"
+      }
+    },
+    "onboarding": {
+      "mobileInput": {
+        "type": "XPATH",
+        "value": "//android.widget.EditText[../android.widget.TextView[contains(translate(@text,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),'MOBILE')]]"
+      },
+      "validateParent": {
+        "type": "XPATH",
+        "value": "//android.widget.TextView[@text='Validate Number']/ancestor::android.view.View[@clickable='true'][1]"
+      },
+      "composeThirdButton": {
+        "type": "XPATH",
+        "value": "//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[3]"
+      },
+      "cameraCaptureButton": {
+        "type": "ID",
+        "value": "mifix.io.qa:id/btnCapture"
+      }
+    },
+    "l2Info": {
+      "prospectL1DetailsCard": {
+        "type": "XPATH",
+        "value": "//androidx.cardview.widget.CardView[@resource-id='mifix.io.qa:id/cardL1Details']/android.view.ViewGroup"
+      },
+      "alternateMobileInput": {
+        "type": "XPATH",
+        "value": "//android.widget.EditText"
+      },
+      "religionSpinner": {
+        "type": "XPATH",
+        "value": "//android.widget.Spinner[@text='Select Religion']"
+      },
+      "religionOptionHindu": {
+        "type": "XPATH",
+        "value": "//android.view.ViewGroup[@resource-id='android:id/content']/android.view.View/android.view.View/android.view.View/android.widget.ScrollView/android.widget.ScrollView/android.view.View[2]"
+      },
+      "educationSpinner": {
+        "type": "XPATH",
+        "value": "//android.widget.Spinner[@text='Select Education Qualification']"
+      },
+      "educationOptionEngineeringGraduate": {
+        "type": "XPATH",
+        "value": "//android.widget.TextView[@text='Engineering Graduate']"
+      },
+      "submitTextButton": {
+        "type": "XPATH",
+        "value": "//android.widget.TextView[@text='SUBMIT' or @text='Submit']/ancestor::android.view.View[@clickable='true'][1]"
+      }
+    }
+  },
+  "globalSettings": {
+    "appiumUrl": "http://127.0.0.1:4723",
+    "platformName": "Android",
+    "deviceName": "emulator-5554",
+    "appPackage": "com.nst.profile.qa",
+    "appActivity": "com.nst.profile.feature_splash.ui.SplashScreenActivity"
+  }
+}

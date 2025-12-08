@@ -9,6 +9,9 @@ public class ExecutionStep {
     private String action;
     private List<String> actions;
     private boolean useCredentials;
+    
+    // NEW: Generic action-driven approach
+    private List<ActionStep> actionSteps;  // List of generic actions
 
     public String getStepName() {
         return stepName;
@@ -56,5 +59,13 @@ public class ExecutionStep {
 
     public void setUseCredentials(boolean useCredentials) {
         this.useCredentials = useCredentials;
+    }
+
+    public List<ActionStep> getActionSteps() {
+        return actionSteps;
+    }
+
+    public void setActionSteps(List<ActionStep> actionSteps) {
+        this.actionSteps = actionSteps;
     }
 }

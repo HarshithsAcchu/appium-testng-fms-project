@@ -19,81 +19,1205 @@
         {
           "stepName": "handlePermissions",
           "enabled": true,
-          "page": "PermissionPage",
-          "action": "handlePermissions"
+          "description": "Handle app permissions",
+          "actionSteps": [
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 3000
+              },
+              "description": "Wait for permission dialogs"
+            }
+          ]
         },
         {
-          "stepName": "waitForLoginScreen",
+          "stepName": "loginWithGenericActions",
           "enabled": true,
-          "page": "HomePage",
-          "action": "waitForLoginScreenReady"
-        },
-        {
-          "stepName": "enterCredentials",
-          "enabled": true,
-          "page": "HomePage",
-          "actions": ["enterUserId", "enterPassword", "clickSignInButton"],
-          "useCredentials": true
+          "description": "Login using generic JSON-driven actions",
+          "actionSteps": [
+            {
+              "actionType": "waitForVisible",
+              "locatorCategory": "login",
+              "locatorName": "userId",
+              "params": {
+                "milliseconds": 15000
+              },
+              "description": "Wait for login screen to be ready"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "login",
+              "locatorName": "userId",
+              "description": "Click user ID field"
+            },
+            {
+              "actionType": "sendKeys",
+              "locatorCategory": "login",
+              "locatorName": "userId",
+              "value": "us-sh-shc-60507",
+              "description": "Enter username"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "login",
+              "locatorName": "password",
+              "description": "Click password field"
+            },
+            {
+              "actionType": "sendKeys",
+              "locatorCategory": "login",
+              "locatorName": "password",
+              "value": "Nst@1234",
+              "description": "Enter password"
+            },
+            {
+              "actionType": "hideKeyboard",
+              "optional": true,
+              "description": "Hide keyboard if visible"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "login",
+              "locatorName": "signInButton",
+              "description": "Click sign in button"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 2000
+              },
+              "description": "Wait for navigation to complete"
+            }
+          ]
         },
         {
           "stepName": "navigateToJLG",
           "enabled": true,
-          "page": "HomePage",
-          "actions": ["waitForJLGVisible", "clickJLG"]
+          "description": "Navigate to JLG using generic actions",
+          "actionSteps": [
+            {
+              "actionType": "waitForVisible",
+              "locatorCategory": "home",
+              "locatorName": "jlgText",
+              "params": {
+                "milliseconds": 20000
+              },
+              "description": "Wait for JLG element to appear"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "home",
+              "locatorName": "jlgText",
+              "description": "Click JLG option"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1500
+              },
+              "description": "Wait for JLG screen to load"
+            }
+          ]
         },
         {
-          "stepName": "openOnboarding",
+          "stepName": "openCustomerDetails",
           "enabled": true,
-          "page": "OnboardingPage",
-          "action": "openCustomerDetailsScreen"
+          "description": "Open customer details screen",
+          "actionSteps": [
+            {
+              "actionType": "waitForVisible",
+              "locatorCategory": "onboarding",
+              "locatorName": "customerDetailsText",
+              "params": {
+                "milliseconds": 10000
+              },
+              "description": "Wait for customer details text"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "customerDetailsText",
+              "description": "Click customer details"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1000
+              }
+            }
+          ]
         },
         {
           "stepName": "captureConsent",
           "enabled": true,
-          "page": "OnboardingPage",
-          "action": "clickCaptureCustomerConsent"
+          "description": "Capture customer consent",
+          "actionSteps": [
+            {
+              "actionType": "scrollToElement",
+              "locatorCategory": "onboarding",
+              "locatorName": "captureCustomerConsent",
+              "params": {
+                "maxScrolls": 5,
+                "direction": "down",
+                "distance": 400
+              },
+              "description": "Scroll to consent button"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "captureCustomerConsent",
+              "description": "Click capture consent"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 2000
+              }
+            }
+          ]
         },
         {
-          "stepName": "submitMobile",
+          "stepName": "enterMobileNumber",
           "enabled": true,
-          "page": "OnboardingPage",
-          "action": "enterMobileNumberAndSubmit"
+          "description": "Enter and submit mobile number",
+          "actionSteps": [
+            {
+              "actionType": "scrollToElement",
+              "locatorCategory": "onboarding",
+              "locatorName": "mobileInput",
+              "params": {
+                "maxScrolls": 6,
+                "direction": "down",
+                "distance": 400
+              },
+              "description": "Scroll to mobile input"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "mobileInput",
+              "description": "Click mobile input"
+            },
+            {
+              "actionType": "sendKeys",
+              "locatorCategory": "onboarding",
+              "locatorName": "mobileInput",
+              "value": "9876543210",
+              "description": "Enter mobile number"
+            },
+            {
+              "actionType": "hideKeyboard",
+              "optional": true
+            },
+            {
+              "actionType": "scrollToElement",
+              "locatorCategory": "onboarding",
+              "locatorName": "validateParent",
+              "params": {
+                "maxScrolls": 5,
+                "direction": "down",
+                "distance": 300
+              },
+              "optional": true,
+              "description": "Scroll to validate button"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "validateParent",
+              "description": "Click validate button"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 2000
+              }
+            }
+          ]
         },
         {
-          "stepName": "completeVoterIdFlow",
+          "stepName": "completeVoterIdCapture",
           "enabled": true,
-          "page": "OnboardingPage",
-          "action": "completeVoterIdCaptureFlow"
+          "description": "Complete voter ID capture flow",
+          "actionSteps": [
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "rightArrowLocator",
+              "description": "Click right arrow locator"
+            },
+            {
+              "actionType": "waitForClickable",
+              "locatorCategory": "onboarding",
+              "locatorName": "cameraCaptureButton",
+              "params": {
+                "milliseconds": 8000
+              },
+              "description": "Wait for camera capture button"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "cameraCaptureButton",
+              "description": "First capture attempt"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "cropButton",
+              "description": "Crop first capture"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1000
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "cameraCancelButton",
+              "description": "Cancel first capture"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1000
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "cameraCaptureButton",
+              "description": "Recapture image"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "uploadRecentImageText",
+              "description": "Upload recent image"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1500
+              }
+            },
+            {
+              "actionType": "waitForClickable",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeThirdButton",
+              "params": {
+                "milliseconds": 20000
+              },
+              "description": "Wait for compose third button"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeThirdButton",
+              "description": "Click compose third button"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1000
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "selectDocumentSpinner",
+              "description": "Click document spinner"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "documentFirstOption",
+              "description": "Select first document option"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1000
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeGenericButton",
+              "description": "First generic compose click"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeGenericButton",
+              "description": "Second generic compose click"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 2000
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeGenericButton",
+              "description": "Submit Click"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 2000
+              }
+            },
+            {
+              "actionType": "waitForVisible",
+              "locatorCategory": "onboarding",
+              "locatorName": "voterIdInput",
+              "params": {
+                "milliseconds": 20000
+              },
+              "description": "Wait for voter ID input to appear"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "voterIdInput",
+              "description": "Click voter ID input"
+            },
+            {
+              "actionType": "clear",
+              "locatorCategory": "onboarding",
+              "locatorName": "voterIdInput",
+              "optional": true,
+              "description": "Clear voter ID field"
+            },
+            {
+              "actionType": "sendKeys",
+              "locatorCategory": "onboarding",
+              "locatorName": "voterIdInput",
+              "value": "VTR1234567890",
+              "description": "Enter voter ID"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "submitSectionButton",
+              "description": "Click submit voter details"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 2000
+              }
+            },
+            {
+              "actionType": "waitForClickable",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeSecondButton",
+              "params": {
+                "milliseconds": 20000
+              },
+              "optional": true,
+              "description": "Wait for compose second button"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeSecondButton",
+              "optional": true,
+              "description": "Click compose second button if present"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "swipe",
+              "params": {
+                "startX": 472,
+                "startY": 705,
+                "endX": 467,
+                "endY": 893,
+                "duration": 450
+              },
+              "description": "Coordinate swipe to scroll form"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "scrollToElement",
+              "locatorCategory": "onboarding",
+              "locatorName": "scrollEditTextFive",
+              "params": {
+                "maxScrolls": 5
+              },
+              "optional": true,
+              "description": "Scroll to father name"
+            },
+            {
+              "actionType": "sendKeys",
+              "locatorCategory": "onboarding",
+              "locatorName": "scrollEditTextFive",
+              "value": "darshan",
+              "description": "Enter father name"
+            },
+            {
+              "actionType": "sendKeys",
+              "locatorCategory": "onboarding",
+              "locatorName": "scrollEditTextSix",
+              "value": "saroja",
+              "description": "Enter mother name"
+            },
+            {
+              "actionType": "hideKeyboard",
+              "optional": true
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "scrollRadioButtonThree",
+              "optional": true,
+              "description": "Click radio button option 3"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeGenericButton",
+              "description": "Compose submit button (1)"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "scrollView2Inner",
+              "optional": true,
+              "description": "Click scroll view[2] inner"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeGenericButton",
+              "description": "Compose submit button (2)"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeSecondButton",
+              "description": "Compose button index 2 repeat"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeGenericButton",
+              "description": "Compose submit button (3)"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "scrollView3Inner",
+              "optional": true,
+              "description": "Click scroll view[3] inner"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeGenericButton",
+              "description": "Compose submit button (4)"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeGenericButton",
+              "description": "Compose submit button (5)"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeGenericButton",
+              "description": "Compose submit button (6)"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "scrollView4Section",
+              "optional": true,
+              "description": "Click scroll view[4] section"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeNestedSecondButton",
+              "optional": true,
+              "description": "Click compose nested button"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "scrollView7Button",
+              "optional": true,
+              "description": "Click scroll view[7] button"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 2000
+              }
+            },
+            {
+              "actionType": "waitForVisible",
+              "locatorCategory": "onboarding",
+              "locatorName": "successfullyCapturedMessage",
+              "params": {
+                "milliseconds": 5000
+              },
+              "optional": true,
+              "description": "Wait for success message"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "composeGenericButton",
+              "optional": true,
+              "description": "Click compose after success message"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1000
+              }
+            }
+          ]
         },
         {
           "stepName": "clickL2Continuation",
           "enabled": true,
-          "page": "L2InfoActions",
-          "action": "clickContinuationDirectly"
+          "description": "Click L2 continuation button",
+          "actionSteps": [
+            {
+              "actionType": "waitForVisible",
+              "locatorCategory": "l2Info",
+              "locatorName": "successMessage",
+              "params": {
+                "milliseconds": 10000
+              },
+              "optional": true,
+              "description": "Wait for success message"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 2000
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "postSuccessComposeView",
+              "description": "Click post-success compose view"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1500
+              }
+            }
+          ]
         },
         {
           "stepName": "selectL2Customer",
           "enabled": true,
-          "page": "L2InfoActions",
-          "action": "selectFirstCustomerSkippingAlerts"
+          "description": "Select first L2 customer and handle alerts",
+          "actionSteps": [
+            {
+              "actionType": "waitForVisible",
+              "locatorCategory": "l2Info",
+              "locatorName": "listviewOfL2",
+              "params": {
+                "milliseconds": 10000
+              },
+              "description": "Wait for L2 list"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "listviewOfL2",
+              "description": "Click first customer card"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "alertDismissButton",
+              "optional": true,
+              "description": "Dismiss alert if present"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1000
+              }
+            }
+          ]
         },
         {
           "stepName": "fillL2ProspectDetails",
           "enabled": true,
-          "page": "L2InfoActions",
-          "action": "fillL2ProspectL1DetailsFlow"
+          "description": "Fill L2 prospect L1 details",
+          "actionSteps": [
+            {
+              "actionType": "waitForClickable",
+              "locatorCategory": "l2Info",
+              "locatorName": "prospectL1DetailsCard",
+              "params": {
+                "milliseconds": 10000
+              },
+              "description": "Wait for L2 details card"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "prospectL1DetailsCard",
+              "description": "Click L2 prospect details card"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1500
+              }
+            },
+            {
+              "actionType": "scrollToElement",
+              "locatorCategory": "l2Info",
+              "locatorName": "alternateMobileInput",
+              "params": {
+                "maxScrolls": 3
+              },
+              "description": "Scroll to alternate mobile"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "alternateMobileInput",
+              "description": "Click alternate mobile input"
+            },
+            {
+              "actionType": "sendKeys",
+              "locatorCategory": "l2Info",
+              "locatorName": "alternateMobileInput",
+              "value": "8105928245",
+              "description": "Enter alternate mobile"
+            },
+            {
+              "actionType": "hideKeyboard",
+              "optional": true
+            },
+            {
+              "actionType": "scroll",
+              "params": {
+                "direction": "down",
+                "distance": 300
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "currentAddressYesToggle",
+              "optional": true,
+              "description": "Toggle current address yes"
+            },
+            {
+              "actionType": "scroll",
+              "params": {
+                "direction": "down",
+                "distance": 400
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "religionSpinner",
+              "description": "Click religion spinner"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "religionOptionHindu",
+              "description": "Select Hindu"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "scroll",
+              "params": {
+                "direction": "down",
+                "distance": 300
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "educationSpinner",
+              "description": "Click education spinner"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "educationOptionEngineeringGraduate",
+              "description": "Select Engineering Graduate"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "scroll",
+              "params": {
+                "direction": "down",
+                "distance": 300
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "residenceSpinner",
+              "description": "Click residence spinner"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "residenceOptionOwnHouse",
+              "description": "Select Own House"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "scroll",
+              "params": {
+                "direction": "down",
+                "distance": 300
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "ownershipProofSpinner",
+              "description": "Click ownership proof spinner"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "ownershipOptionKatha",
+              "description": "Select Katha"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1000
+              }
+            },
+            {
+              "actionType": "scrollToElement",
+              "locatorCategory": "l2Info",
+              "locatorName": "captureFrontImageText",
+              "params": {
+                "maxScrolls": 5
+              },
+              "description": "Scroll to capture front image"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "captureFrontImageText",
+              "description": "Click capture front"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 2000
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "cameraCaptureButton",
+              "description": "Capture front image"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "cropButton",
+              "optional": true
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1000
+              }
+            },
+            {
+              "actionType": "scrollToElement",
+              "locatorCategory": "l2Info",
+              "locatorName": "captureBackImageText",
+              "params": {
+                "maxScrolls": 3
+              },
+              "description": "Scroll to capture back image"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "captureBackImageText",
+              "description": "Click capture back"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 2000
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "cameraCaptureButton",
+              "description": "Capture back image"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "cropButton",
+              "optional": true
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1000
+              }
+            },
+            {
+              "actionType": "scrollToElement",
+              "locatorCategory": "l2Info",
+              "locatorName": "submitTextButton",
+              "params": {
+                "maxScrolls": 5
+              },
+              "description": "Scroll to submit button"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "submitTextButton",
+              "description": "Click submit"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 3000
+              }
+            }
+          ]
         }
       ]
     },
     {
       "suiteName": "BankDetailsOnly",
       "enabled": true,
+      "testData": {
+        "bankAccountNumber": "10990200087021",
+        "ifscCode": "ICIC0002121"
+      },
       "executionFlow": [
         {
           "stepName": "fillBankDetails",
           "enabled": true,
-          "page": "L2InfoActions",
-          "action": "fillBankDetailsAndCaptureProof"
+          "description": "Fill bank details and capture proof",
+          "actionSteps": [
+            {
+              "actionType": "waitForVisible",
+              "locatorCategory": "l2Info",
+              "locatorName": "addBankAccountButton",
+              "params": {
+                "milliseconds": 10000
+              },
+              "description": "Wait for add bank button"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "addBankAccountButton",
+              "description": "Click add bank account"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1500
+              }
+            },
+            {
+              "actionType": "scrollToElement",
+              "locatorCategory": "l2Info",
+              "locatorName": "bankAccountNumberInput",
+              "params": {
+                "maxScrolls": 3
+              },
+              "description": "Scroll to account number"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "bankAccountNumberInput",
+              "description": "Click account number input"
+            },
+            {
+              "actionType": "sendKeys",
+              "locatorCategory": "l2Info",
+              "locatorName": "bankAccountNumberInput",
+              "value": "10990200087021",
+              "description": "Enter account number"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "bankAccountReenterInput",
+              "description": "Click re-enter account"
+            },
+            {
+              "actionType": "sendKeys",
+              "locatorCategory": "l2Info",
+              "locatorName": "bankAccountReenterInput",
+              "value": "10990200087021",
+              "description": "Re-enter account number"
+            },
+            {
+              "actionType": "hideKeyboard",
+              "optional": true
+            },
+            {
+              "actionType": "scroll",
+              "params": {
+                "direction": "down",
+                "distance": 300
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "bankIfscInput",
+              "description": "Click IFSC input"
+            },
+            {
+              "actionType": "sendKeys",
+              "locatorCategory": "l2Info",
+              "locatorName": "bankIfscInput",
+              "value": "ICIC0002121",
+              "description": "Enter IFSC code"
+            },
+            {
+              "actionType": "hideKeyboard",
+              "optional": true
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "bankIfscSearchButton",
+              "description": "Click IFSC search"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 3000
+              },
+              "description": "Wait for bank details to populate"
+            },
+            {
+              "actionType": "scrollToElement",
+              "locatorCategory": "l2Info",
+              "locatorName": "bankProofImageToggle",
+              "params": {
+                "maxScrolls": 5
+              },
+              "description": "Scroll to proof toggle"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "bankProofImageToggle",
+              "description": "Click proof image toggle"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 2000
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "l2Info",
+              "locatorName": "bankProofComposeCapture",
+              "description": "Click capture button"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 2000
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "cameraCaptureButton",
+              "description": "Capture bank proof"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1500
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "cropButton",
+              "optional": true
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 2000
+              }
+            }
+          ]
         }
       ]
     }
@@ -109,8 +1233,8 @@
         "value": "com.nst.profile.qa:id/editPassword"
       },
       "signInButton": {
-        "type": "ID",
-        "value": "com.nst.profile.qa:id/buttonSignIn"
+        "type": "CLASS_NAME",
+        "value": "android.widget.Button"
       },
       "signInFallback": {
         "type": "CLASS_NAME",
@@ -142,7 +1266,7 @@
       },
       "rightArrowLocator": {
         "type": "XPATH",
-        "value": "//android.view.View[@bounds='[430,1848][650,2068]' and @clickable='true']"
+        "value": "//android.widget.Button"
       },
       "cameraCaptureButton": {
         "type": "ID",

@@ -1,6 +1,8 @@
 package com.example.runners;
 
+import com.example.actions.GenericActionExecutor;
 import com.example.config.ConfigurationReader;
+import com.example.config.models.ActionStep;
 import com.example.config.models.ExecutionStep;
 import com.example.config.models.TestSuite;
 import com.example.managers.PageObjectManager;
@@ -19,6 +21,7 @@ public class ParameterizedTestRunner {
     private final AndroidDriver driver;
     private final PageObjectManager pageObjectManager;
     private final ConfigurationReader configReader;
+    private final GenericActionExecutor actionExecutor;
     private final String suiteName;
 
     public ParameterizedTestRunner(AndroidDriver driver, String suiteName) {
@@ -26,6 +29,7 @@ public class ParameterizedTestRunner {
         this.suiteName = suiteName;
         this.pageObjectManager = new PageObjectManager(driver);
         this.configReader = ConfigurationReader.getInstance();
+        this.actionExecutor = new GenericActionExecutor(driver);
     }
 
     /**
@@ -62,6 +66,13 @@ public class ParameterizedTestRunner {
      * Execute individual test step
      */
     private void executeStep(ExecutionStep step, TestSuite suite) throws Exception {
+        // NEW: Check if step uses generic action steps (JSON-driven actions)
+        if (step.getActionSteps() != null && !step.getActionSteps().isEmpty()) {
+            executeGenericActions(step);
+            return;
+        }
+        
+        // LEGACY: Old hardcoded page-action approach
         String page = step.getPage();
         
         switch (page) {
@@ -79,6 +90,15 @@ public class ParameterizedTestRunner {
                 break;
             default:
                 throw new IllegalArgumentException("Unknown page: " + page);
+        }
+    }
+
+    /**
+     * Execute generic actions from actionSteps array
+     */
+    private void executeGenericActions(ExecutionStep step) {
+        for (ActionStep actionStep : step.getActionSteps()) {
+            actionExecutor.executeAction(actionStep);
         }
     }
 
