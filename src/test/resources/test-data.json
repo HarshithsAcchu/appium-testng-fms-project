@@ -1,0 +1,55 @@
+{
+  "L2ProspectL1Flow": [
+    {
+      "dataId": "User1_Data",
+      "username": "us-sh-shc-60507",
+      "password": "Nst@1234",
+      "mobileNumber": "9876543210",
+      "alternateMobile": "8105928245",
+      "voterIdPrefix": "VTR",
+      "voterIdNumber": "VTR1589427",
+      "fatherName": "darshan",
+      "motherName": "saroja",
+      "bankAccountNumber": "10990200087021",
+      "ifscCode": "ICIC0002121"
+    },
+    {
+      "dataId": "User2_Data",
+      "username": "us-sh-shc-60508",
+      "password": "Test@5678",
+      "mobileNumber": "9988776655",
+      "alternateMobile": "8899001122",
+      "voterIdPrefix": "VTR",
+      "voterIdNumber": "VTR9876543",
+      "fatherName": "kumar",
+      "motherName": "lakshmi",
+      "bankAccountNumber": "20001100223344",
+      "ifscCode": "HDFC0001234"
+    },
+    {
+      "dataId": "User3_Data",
+      "username": "us-sh-shc-60509",
+      "password": "Pass@9012",
+      "mobileNumber": "8877665544",
+      "alternateMobile": "7766554433",
+      "voterIdPrefix": "VTR",
+      "voterIdNumber": "VTR1122334",
+      "fatherName": "ravi",
+      "motherName": "priya",
+      "bankAccountNumber": "30002200445566",
+      "ifscCode": "SBIN0005678"
+    }
+  ],
+  "BankDetailsOnly": [
+    {
+      "dataId": "Bank1_Data",
+      "bankAccountNumber": "10990200087021",
+      "ifscCode": "ICIC0002121"
+    },
+    {
+      "dataId": "Bank2_Data",
+      "bankAccountNumber": "20001100223344",
+      "ifscCode": "HDFC0001234"
+    }
+  ]
+}

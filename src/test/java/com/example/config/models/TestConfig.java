@@ -4,7 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 public class TestConfig {
+    // Legacy support - keep for backward compatibility
     private List<TestSuite> testSuites;
+    
+    // New structure - centralized data and flows
+    private List<TestDataSet> testDataSets;
+    private List<TestFlow> flows;
+    private List<SuiteExecution> suiteExecutions;
+    
     private Map<String, Map<String, LocatorConfig>> locators;
     private GlobalSettings globalSettings;
 
@@ -40,5 +47,30 @@ public class TestConfig {
                 .filter(suite -> suite.getSuiteName().equals(suiteName))
                 .findFirst()
                 .orElse(null);
+    }
+
+    // New getters and setters
+    public List<TestDataSet> getTestDataSets() {
+        return testDataSets;
+    }
+
+    public void setTestDataSets(List<TestDataSet> testDataSets) {
+        this.testDataSets = testDataSets;
+    }
+
+    public List<TestFlow> getFlows() {
+        return flows;
+    }
+
+    public void setFlows(List<TestFlow> flows) {
+        this.flows = flows;
+    }
+
+    public List<SuiteExecution> getSuiteExecutions() {
+        return suiteExecutions;
+    }
+
+    public void setSuiteExecutions(List<SuiteExecution> suiteExecutions) {
+        this.suiteExecutions = suiteExecutions;
     }
 }

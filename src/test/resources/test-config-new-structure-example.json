@@ -1,0 +1,248 @@
+{
+  "testDataSets": [
+    {
+      "dataSetName": "DefaultUserData",
+      "description": "Default test data for L2 prospect flow",
+      "data": {
+        "username": "us-sh-shc-60507",
+        "password": "Nst@1234",
+        "mobileNumber": "9876543210",
+        "alternateMobile": "8105928245",
+        "voterIdPrefix": "VTR",
+        "voterIdNumber": "VTR1589427",
+        "fatherName": "darshan",
+        "motherName": "saroja",
+        "bankAccountNumber": "10990200087021",
+        "ifscCode": "ICIC0002121"
+      }
+    },
+    {
+      "dataSetName": "AlternateUserData",
+      "description": "Alternate test data for regression testing",
+      "data": {
+        "username": "us-sh-shc-60508",
+        "password": "Test@5678",
+        "mobileNumber": "9988776655",
+        "alternateMobile": "8899001122",
+        "voterIdPrefix": "VTR",
+        "voterIdNumber": "VTR9876543",
+        "fatherName": "kumar",
+        "motherName": "lakshmi",
+        "bankAccountNumber": "20001100223344",
+        "ifscCode": "HDFC0001234"
+      }
+    }
+  ],
+  "flows": [
+    {
+      "flowName": "LoginFlow",
+      "description": "Login to the application",
+      "steps": [
+        {
+          "stepName": "handlePermissions",
+          "enabled": true,
+          "description": "Handle app permissions",
+          "actionSteps": [
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 3000
+              },
+              "description": "Wait for permission dialogs"
+            }
+          ]
+        },
+        {
+          "stepName": "performLogin",
+          "enabled": true,
+          "description": "Login with credentials",
+          "actionSteps": [
+            {
+              "actionType": "waitForVisible",
+              "locatorCategory": "login",
+              "locatorName": "userId",
+              "params": {
+                "milliseconds": 15000
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "login",
+              "locatorName": "userId"
+            },
+            {
+              "actionType": "sendKeys",
+              "locatorCategory": "login",
+              "locatorName": "userId",
+              "value": "${testData.username}"
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "login",
+              "locatorName": "password"
+            },
+            {
+              "actionType": "sendKeys",
+              "locatorCategory": "login",
+              "locatorName": "password",
+              "value": "${testData.password}"
+            },
+            {
+              "actionType": "hideKeyboard",
+              "optional": true
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "login",
+              "locatorName": "signInButton"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 2000
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "flowName": "NavigateToJLGFlow",
+      "description": "Navigate to JLG section",
+      "steps": [
+        {
+          "stepName": "navigateToJLG",
+          "enabled": true,
+          "actionSteps": [
+            {
+              "actionType": "waitForVisible",
+              "locatorCategory": "home",
+              "locatorName": "jlgText",
+              "params": {
+                "milliseconds": 20000
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "home",
+              "locatorName": "jlgText"
+            },
+            {
+              "actionType": "wait",
+              "params": {
+                "milliseconds": 1500
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "flowName": "CustomerOnboardingFlow",
+      "description": "Complete customer onboarding with voter ID",
+      "steps": [
+        {
+          "stepName": "openCustomerDetails",
+          "enabled": true,
+          "actionSteps": [
+            {
+              "actionType": "waitForVisible",
+              "locatorCategory": "onboarding",
+              "locatorName": "customerDetailsText",
+              "params": {
+                "milliseconds": 10000
+              }
+            },
+            {
+              "actionType": "click",
+              "locatorCategory": "onboarding",
+              "locatorName": "customerDetailsText"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "suiteExecutions": [
+    {
+      "suiteName": "FullOnboardingFlow_User1",
+      "enabled": true,
+      "description": "Complete onboarding flow with default user data",
+      "dataSetRef": "DefaultUserData",
+      "flowRefs": [
+        "LoginFlow",
+        "NavigateToJLGFlow",
+        "CustomerOnboardingFlow"
+      ],
+      "resetAfter": true
+    },
+    {
+      "suiteName": "FullOnboardingFlow_User2",
+      "enabled": true,
+      "description": "Complete onboarding flow with alternate user data",
+      "dataSetRef": "AlternateUserData",
+      "flowRefs": [
+        "LoginFlow",
+        "NavigateToJLGFlow",
+        "CustomerOnboardingFlow"
+      ],
+      "resetAfter": true
+    },
+    {
+      "suiteName": "LoginOnly_Test",
+      "enabled": false,
+      "description": "Test login functionality only",
+      "dataSetRef": "DefaultUserData",
+      "flowRefs": [
+        "LoginFlow"
+      ],
+      "resetAfter": false
+    }
+  ],
+  "locators": {
+    "login": {
+      "userId": {
+        "type": "ID",
+        "value": "com.nst.profile.qa:id/user_id_edit_text"
+      },
+      "password": {
+        "type": "ID",
+        "value": "com.nst.profile.qa:id/password_edit_text"
+      },
+      "signInButton": {
+        "type": "ID",
+        "value": "com.nst.profile.qa:id/sign_in_button"
+      }
+    },
+    "home": {
+      "jlgText": {
+        "type": "XPATH",
+        "value": "//android.widget.TextView[@text='JLG']"
+      }
+    },
+    "onboarding": {
+      "customerDetailsText": {
+        "type": "XPATH",
+        "value": "//android.widget.TextView[@text='Customer Details']"
+      }
+    }
+  },
+  "globalSettings": {
+    "appiumUrl": "http://127.0.0.1:4723",
+    "platformName": "Android",
+    "deviceName": "emulator-5554",
+    "appPackage": "com.nst.profile.qa",
+    "appActivity": "com.nst.profile.feature_splash.ui.SplashScreenActivity",
+    "autoGrantPermissions": true,
+    "noReset": false,
+    "fullReset": false,
+    "timeouts": {
+      "implicit": 0,
+      "explicit": {
+        "short": 4,
+        "medium": 8,
+        "long": 20
+      }
+    }
+  }
+}

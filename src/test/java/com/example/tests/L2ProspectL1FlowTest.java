@@ -3,6 +3,7 @@ package com.example.tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.example.runners.DataDrivenTestRunner;
 import com.example.runners.ParameterizedTestRunner;
 
 public class L2ProspectL1FlowTest extends BaseTest {
@@ -21,6 +22,12 @@ public class L2ProspectL1FlowTest extends BaseTest {
      * Reads test flow from test-config.json and executes accordingly
      */
     @Test(groups = "l2Info", priority = 1)
+    public void runL2ProspectFlowWithAllData() {
+        DataDrivenTestRunner runner = new DataDrivenTestRunner(driver);
+        runner.executeSuiteWithAllData("L2ProspectL1Flow");
+
+    }
+    @Test(groups = "l2Info", priority = 2)
     public void runL2ProspectL1DetailsFlow() throws Exception {
         System.out.println("=".repeat(80));
         System.out.println("[L2ProspectL1FlowTest] Starting JSON-driven test execution");
