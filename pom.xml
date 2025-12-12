@@ -6,15 +6,16 @@
  <artifactId>fms-appium</artifactId>
  <version>1.0-SNAPSHOT</version>
  
- <properties>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <properties>
+   <java.version>11</java.version>
+   <maven.compiler.source>${java.version}</maven.compiler.source>
+   <maven.compiler.target>${java.version}</maven.compiler.target>
+   <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <appium.client.version>8.6.0</appium.client.version>
-    <selenium.version>4.11.0</selenium.version>
-    <testng.version>7.8.0</testng.version>
-    <surefire.version>3.0.0-M9</surefire.version>
+   <appium.client.version>8.6.0</appium.client.version>
+   <selenium.version>4.11.0</selenium.version>
+   <testng.version>7.8.0</testng.version>
+   <surefire.version>3.0.0-M9</surefire.version>
  </properties>
 
  <dependencies>
@@ -53,6 +54,8 @@
       <scope>test</scope>
     </dependency>
     
+    <!-- Mockito inline removed temporarily due to repository resolution issues -->
+    
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
@@ -68,13 +71,35 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
+        <version>3.10.1</version>
         <configuration>
           <source>${maven.compiler.source}</source>
           <target>${maven.compiler.target}</target>
-          <release>${maven.compiler.source}</release>
+          <release>${java.version}</release>
           <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.3.0</version>
+        <executions>
+          <execution>
+            <id>enforce-java</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireJavaVersion>
+                  <version>[11,)</version>
+                </requireJavaVersion>
+              </rules>
+              <fail>true</fail>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       
       <plugin>
@@ -88,9 +113,7 @@
           <systemPropertyVariables>
             <appium.server.url>http://127.0.0.1:4723</appium.server.url>
           </systemPropertyVariables>
-          <argLine>
-            --illegal-access=permit
-          </argLine>
+          <!-- argLine removed - illegal-access not needed for JDK 11+ -->
         </configuration>
       </plugin>
     </plugins>

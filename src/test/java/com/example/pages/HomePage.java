@@ -40,6 +40,8 @@ public class HomePage extends BasePage {
      * Waits for the login screen to be actually visible and clickable.
      * Returns true when ready, false otherwise (and captures debug artifacts).
      */
+
+    
     public boolean waitForLoginScreenReady() {
         long start = System.currentTimeMillis();
         try {

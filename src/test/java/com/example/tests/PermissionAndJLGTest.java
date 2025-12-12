@@ -9,12 +9,11 @@ import org.testng.annotations.Test;
 
 import com.example.managers.PageObjectManager;
 import com.example.pages.L2InfoActions;
+import com.example.testdata.TestConfig;
 
 public class PermissionAndJLGTest extends BaseTest {
 
-    private static final boolean DEBUG_LOGS = false;
-    private static final String USERNAME = "us-sh-shc-60507";
-    private static final String PASSWORD = "Nst@1234";
+    // Credentials and settings loaded from TestConfig (testdata/config.properties)
 
     private PageObjectManager pageObjectManager;
     
@@ -39,7 +38,7 @@ public class PermissionAndJLGTest extends BaseTest {
             logSkippedStage("Permission dialogs", resumePoint);
         }
 
-        if (DEBUG_LOGS) {
+        if (TestConfig.DEBUG_LOGS_ENABLED) {
             System.out.println("Contexts: " + driver.getContextHandles());
             System.out.println("Current context: " + driver.getContext());
             System.out.println("Current activity: " + driver.currentActivity());
@@ -53,8 +52,8 @@ public class PermissionAndJLGTest extends BaseTest {
                 System.err.println("Login screen did not become ready within wait; proceeding with attempts for debugging.");
             }
 
-            homePage.enterUserId(USERNAME);
-            homePage.enterPassword(PASSWORD);
+            homePage.enterUserId(TestConfig.USERNAME);
+            homePage.enterPassword(TestConfig.PASSWORD);
             homePage.clickSignInButton();
 
             homePage.waitForJLGVisible();
@@ -123,8 +122,8 @@ public class PermissionAndJLGTest extends BaseTest {
             System.err.println("Login screen did not become ready within wait; proceeding with attempts for debugging.");
         }
 
-        homePage.enterUserId(USERNAME);
-        homePage.enterPassword(PASSWORD);
+        homePage.enterUserId(TestConfig.USERNAME);
+        homePage.enterPassword(TestConfig.PASSWORD);
         homePage.clickSignInButton();
 
         homePage.waitForJLGVisible();

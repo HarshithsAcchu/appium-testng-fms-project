@@ -2,7 +2,7 @@ package com.example.locators;
 
 import org.openqa.selenium.By;
 
-import io.appium.java_client.MobileBy;
+// Removed MobileBy usages to avoid editor classpath issues; use standard `By` where possible
 
 public final class AppLocators {
 
@@ -20,17 +20,18 @@ public final class AppLocators {
         private Login() {
         }
 
-        public static final By USER_ID = MobileBy.id("com.nst.profile.qa:id/editUserId");
-        public static final By PASSWORD = MobileBy.id("com.nst.profile.qa:id/editPassword");
-        public static final By SIGN_IN = MobileBy.id("com.nst.profile.qa:id/buttonSignIn");
-        public static final By SIGN_IN_FALLBACK = MobileBy.className("android.widget.Button");
+        public static final By USER_ID = By.id("com.nst.profile.qa:id/editUserId");
+        public static final By PASSWORD = By.id("com.nst.profile.qa:id/editPassword");
+        public static final By SIGN_IN = By.id("com.nst.profile.qa:id/buttonSignIn");
+        public static final By SIGN_IN_FALLBACK = By.className("android.widget.Button");
     }
 
     public static final class Onboarding {
         private Onboarding() {
         }
 
-        public static final By VALIDATE_ACCESSIBILITY = MobileBy.AccessibilityId("Validate");
+        // AccessibilityId maps to content-desc on Android; use xpath to match it
+        public static final By VALIDATE_ACCESSIBILITY = By.xpath("//*[@content-desc='Validate']");
         public static final By VALIDATE_PARENT = By.xpath("//android.widget.TextView[@text='Validate Number']/ancestor::android.view.View[@clickable='true'][1]");
         public static final By VALIDATE_PARENT_FUZZY = By.xpath("//android.widget.TextView[contains(translate(@text,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),'VALIDATE')]/ancestor::android.view.View[@clickable='true'][1]");
         public static final By VALIDATE_CLICKABLE = By.xpath("//*[contains(translate(@text,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),'VALIDATE') and (@clickable='true' or @clickable='True')]");
@@ -79,9 +80,9 @@ public final class AppLocators {
         public static final By TOAST_GENERIC = By.xpath("//android.widget.Toast");
 
         // Capture / document upload / voter-id flow
-        public static final By CAMERA_CAPTURE_BUTTON = MobileBy.id("mifix.io.qa:id/btnCapture");
+        public static final By CAMERA_CAPTURE_BUTTON = By.id("mifix.io.qa:id/btnCapture");
         public static final By CROP_BUTTON = By.xpath("//android.widget.Button[@content-desc='Crop']");
-        public static final By CAMERA_CANCEL_BUTTON = MobileBy.id("mifix.io.qa:id/bt_cancel");
+        public static final By CAMERA_CANCEL_BUTTON = By.id("mifix.io.qa:id/bt_cancel");
         public static final By UPLOAD_RECENT_IMAGE_TEXT = By.xpath("//android.widget.TextView[@text='Upload Recent Image']");
         public static final By COMPOSE_THIRD_BUTTON = By.xpath("//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[3]");
         public static final By SELECT_DOCUMENT_SPINNER = By.xpath("//android.widget.Spinner[@text='Select Document']");
@@ -107,7 +108,7 @@ public final class AppLocators {
         }
 
         public static final String ALLOW_BUTTON_TEXT_TEMPLATE = "//android.widget.Button[@text='%s']";
-        public static final By ALLOW_BUTTON_RESOURCE_CONTAINS = MobileBy.xpath("//android.widget.Button[contains(@resource-id,'permission_allow')]");
+        public static final By ALLOW_BUTTON_RESOURCE_CONTAINS = By.xpath("//android.widget.Button[contains(@resource-id,'permission_allow')]");
         public static final String[] ALLOW_BUTTON_IDS = {
             "com.android.permissioncontroller:id/permission_allow_button",
             "com.android.permissioncontroller:id/permission_allow_foreground_only_button",
@@ -132,6 +133,6 @@ public final class AppLocators {
     }
 
     public static By permissionsButtonByText(String text) {
-        return MobileBy.xpath(String.format(Permissions.ALLOW_BUTTON_TEXT_TEMPLATE, text));
+        return By.xpath(String.format(Permissions.ALLOW_BUTTON_TEXT_TEMPLATE, text));
     }
 }

@@ -5,11 +5,11 @@ import org.testng.annotations.Test;
 
 import com.example.managers.PageObjectManager;
 import com.example.pages.L2InfoActions;
+import com.example.testdata.TestConfig;
 
 public class L2ProspectL1FlowTest   extends BaseTest {
 
-    private static final String USERNAME = "us-sh-shc-60507";
-    private static final String PASSWORD = "Nst@1234";
+    // Credentials loaded from TestConfig (testdata/config.properties)
 
     private PageObjectManager pageObjectManager;
 
@@ -30,8 +30,8 @@ public class L2ProspectL1FlowTest   extends BaseTest {
             System.err.println("Login screen did not become ready within wait; proceeding with attempts for debugging.");
         }
 
-        homePage.enterUserId(USERNAME);
-        homePage.enterPassword(PASSWORD);
+        homePage.enterUserId(TestConfig.USERNAME);
+        homePage.enterPassword(TestConfig.PASSWORD);
         homePage.clickSignInButton();
 
         homePage.waitForJLGVisible();
